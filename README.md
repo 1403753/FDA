@@ -6,8 +6,9 @@ packages!
 ## Part 1 - Python (30 points)
 
 The first part of this assignment is intended to get you up and running with
-Python. We have provided a repository on [gitlab](). Please use the file 
-`l1p1.py` in this file to write your code.
+Python. We have provided a repository on
+[gitlab](https://gitlab.cs.univie.ac.at/torsnet6cs/fda-assignment-regression).
+Please use the file `l1p1.py` in this file to write your code.
 
 In the repository we have also provided some test cases which you can use
 to test your code. You'll need to install some packages first though. So set
@@ -80,7 +81,7 @@ Examples:
 
 ```
 >>> cubic(np.array([1,2,3,4]), np.array([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]))
-???
+742
 ```
 
 ## Part 2 - Regression analysis (70 points)
@@ -136,7 +137,8 @@ validation results for each model.
 
 ### Converting a Jupyter notebook to pdf
 
-Jupyter comes with a function called [nbconvert]() that can convert Juyter
+Jupyter comes with a function called
+[nbconvert](https://github.com/jupyter/nbconvert) that can convert Juyter
 notebooks to a variety of formats. To convert your notebook to pdf you'll also
 need LaTeX and [pandoc](https://pandoc.org/) installed. Once you've done this
 you can convert the notebook from the command line:
@@ -147,10 +149,11 @@ you can convert the notebook from the command line:
 
 ### Procedure and Submission
 
-Please submit a ZIP-document with your answers to [Moodle](). Use the following
-naming scheme for your submission: “lastname_matrikelnumber_A1.zip”. The naming
-of the files is important. If you do not follow the submission instructions,
-then you will receive a grade of 0 for the lab.
+Please submit a ZIP-document with your answers to
+[Moodle](https://moodle.univie.ac.at/mod/assign/view.php?id=2862793). Use the
+following naming scheme for your submission: “lastname_matrikelnumber_A1.zip”.
+The naming of the files is important. If you do not follow the submission
+instructions, then you will receive a grade of 0 for the lab.
 
 ### Late submission
 

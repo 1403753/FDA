@@ -9,5 +9,5 @@ def test_case_1():
                 [5, 6, 7, 8], 
                 [9, 10, 11, 12], 
                 [13, 14, 15, 16]])
-  assert l1p1.cubic(x, A) == 45
+  assert l1p1.cubic(x, A) == 742
 
