@@ -21,7 +21,7 @@ def test_already_sorted():
 
 def test_reverse_sorted():
   l = [5, 4, 3, 2, 1]
-  assert l1p1.sort_list(l) == reversed(l)
+  assert l1p1.sort_list(l) == list(reversed(l))
 
 @given(st.lists(st.integers()))
 def test_random_lists(l):

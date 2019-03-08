@@ -22,7 +22,7 @@ def test_digit_order(n, i):
 def test_div_by_7(n, i):
   # don't worry about errors
   try:
-    assert l1p1.div(n, i) % 7 == 0
+    assert l1p1.div7(n, i) % 7 == 0
   except Exception as e:
     assert str(e) == "not possible"
 
