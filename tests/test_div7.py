@@ -12,7 +12,7 @@ def test_case_1():
 def test_case_2():
   v = l1p1.div7(39, 2)
   assert (v%7) == 0
-  assert v == 329
+  assert (v == 329 or v == 392)
 
 @given(st.integers(min_value=10), st.integers(min_value=0, max_value=9))
 def test_digit_order(n, i):
@@ -22,8 +22,8 @@ def test_digit_order(n, i):
 def test_div_by_7(n, i):
   # don't worry about errors
   try:
-    assert l1p1.div7(n, i) % 7 == 0
+    x = l1p1.div7(n, i) 
+    assert x % 7 == 0
   except Exception as e:
     assert str(e) == "not possible"
-
 
