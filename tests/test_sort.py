@@ -6,7 +6,7 @@ import l1p1
 
 def is_sorted(l):
   if(len(l) < 2):
-      return True
+    return True
   else:
     return all([x<=y for x,y in zip(l[:-1],l[1:])])
 
