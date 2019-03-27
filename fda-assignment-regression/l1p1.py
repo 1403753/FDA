@@ -3,6 +3,8 @@
 # Question 1 #
 ##############
 # Define sort function
+# I implemented the classic selection sort algorithm, since for small data
+# (like the test set), it should even perform better than quicksort or mergesort.
 def sort_list(l):
 	for i in range(len(l)):
 		min = i
