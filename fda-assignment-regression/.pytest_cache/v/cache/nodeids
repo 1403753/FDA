@@ -1,11 +1,11 @@
 [
-  "tests/test_cubic.py::test_case_1", 
-  "tests/test_div7.py::test_case_1", 
-  "tests/test_div7.py::test_case_2", 
-  "tests/test_div7.py::test_digit_order", 
-  "tests/test_div7.py::test_div_by_7", 
-  "tests/test_sort.py::test_simple_sort", 
-  "tests/test_sort.py::test_already_sorted", 
-  "tests/test_sort.py::test_reverse_sorted", 
+  "tests/test_cubic.py::test_case_1",
+  "tests/test_div7.py::test_case_1",
+  "tests/test_div7.py::test_case_2",
+  "tests/test_div7.py::test_digit_order",
+  "tests/test_div7.py::test_div_by_7",
+  "tests/test_sort.py::test_simple_sort",
+  "tests/test_sort.py::test_already_sorted",
+  "tests/test_sort.py::test_reverse_sorted",
   "tests/test_sort.py::test_random_lists"
 ]
