@@ -19,7 +19,7 @@ def sort_list(l):
 ##############
 # Question 2 #
 ##############
-# Given a random number and a random digit, design an algorithm to place the 
+# Given a random number and a random digit, design an algorithm to place the
 # digit so that the number is divisible by 3
 def div7(n, i):
 	for idx in range(len(str(n))+1):
