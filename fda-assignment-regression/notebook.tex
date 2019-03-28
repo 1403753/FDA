@@ -290,21 +290,29 @@
 \end{enumerate}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}6}]:} \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
         \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        
+        \PY{c+c1}{\PYZsh{} added}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{StandardScaler}
         
         \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{happiness.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
         
         \PY{c+c1}{\PYZsh{} fill impossible data with NaN}
         \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inflation\PYZus{}rate[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inflation\PYZus{}rate[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{nan}
         
-        \PY{n}{y} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{happiness\PYZus{}score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-        
+        \PY{c+c1}{\PYZsh{} drop useless columns}
         \PY{n}{data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{happiness\PYZus{}rank}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{map\PYZus{}reference}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PYZbs{}
                            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{biggest\PYZus{}official\PYZus{}language}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-        \PY{n}{s} \PY{o}{=} \PY{l+m+mi}{1}
         
+        \PY{c+c1}{\PYZsh{} replace NaNs with column\PYZhy{}mean}
+        \PY{n}{data}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c+c1}{\PYZsh{} set target}
+        \PY{n}{y} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{happiness\PYZus{}score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{n}{s} \PY{o}{=} \PY{l+m+mi}{1}
         \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{economy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{s}\PY{p}{)}
@@ -335,7 +343,6 @@
         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cellular\PYZus{}subscriptions}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{surplus\PYZus{}deficit\PYZus{}GDP[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{s}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{100}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{surplus\PYZus{}deficit\PYZus{}GDP[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{familiy\PYZus{}income\PYZus{}gini\PYZus{}coeff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{s}\PY{p}{)}
@@ -345,11 +352,9 @@
         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP\PYZus{}per\PYZus{}capita[\PYZdl{}]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{13}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inflation\PYZus{}rate[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{s}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{100}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inflation\PYZus{}rate[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{military\PYZus{}expenditures[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{s}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{100}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{military\PYZus{}expenditures[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}
         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{population}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{s}\PY{p}{)}
@@ -404,33 +409,32 @@ these out of the gut conclusions:
 programmatically
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} Unwanted columns were dropped and extreme outliers}
-        \PY{c+c1}{\PYZsh{} were replaced with NaNs before plotting.}
-        \PY{c+c1}{\PYZsh{} Now the NaNs are replaced by their column\PYZhy{}mean.}
-        
-        \PY{n}{data}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{;}
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} Unwanted columns were dropped, extreme outliers}
+        \PY{c+c1}{\PYZsh{} were replaced with NaNs and NaNs were eventually}
+        \PY{c+c1}{\PYZsh{} replaced by their column means before plotting.}
 \end{Verbatim}
 
 
     \subsection{Linear model}\label{linear-model}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{X} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{len}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{]}\PY{p}{;}
-        \PY{n}{y} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{happiness\PYZus{}score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{X} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
         
+        \PY{c+c1}{\PYZsh{} compute corrcoef}
         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+si}{\PYZpc{}\PYZhy{}13s}\PY{l+s+s2}{Corrcoef:}\PY{l+s+s2}{\PYZdq{}}\PY{o}{\PYZpc{}}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
         \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}\PY{p}{:}
             \PY{n}{cc} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ma}\PY{o}{.}\PY{n}{corrcoef}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{x}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}\PYZhy{}30s}\PY{l+s+s2}{: }\PY{l+s+si}{\PYZpc{}.3f}\PY{l+s+s2}{\PYZdq{}}\PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{n}{x}\PY{p}{]}\PY{p}{,} \PY{n}{cc}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,}
             \PY{k}{if} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{cc}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.3}\PY{p}{)}\PY{p}{:}
-                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZlt{}\PYZhy{} no correlation, factor will be dropped}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZlt{}\PYZhy{} no correlation, drop candidate}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
             \PY{k}{else}\PY{p}{:}
                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
         
-        \PY{n}{X}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{generosity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{surplus\PYZus{}deficit\PYZus{}GDP[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PYZbs{}
-                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{military\PYZus{}expenditures[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{population}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} carefully drop possibly uncorrelated columns}
+        \PY{n}{X}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{surplus\PYZus{}deficit\PYZus{}GDP[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{military\PYZus{}expenditures[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PYZbs{}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{population}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{;}
         
-        
+        \PY{c+c1}{\PYZsh{} function to compute the VIF}
         \PY{k}{def} \PY{n+nf}{VIF\PYZus{}scores}\PY{p}{(}\PY{n}{K}\PY{p}{)}\PY{p}{:}
             \PY{n}{cc} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{corrcoef}\PY{p}{(}\PY{n}{K}\PY{p}{,} \PY{n}{rowvar}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
             \PY{n}{VIF} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{inv}\PY{p}{(}\PY{n}{cc}\PY{p}{)}
@@ -442,14 +446,23 @@ programmatically
                 \PY{k}{else}\PY{p}{:}
                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
         
-        \PY{n}{VIF\PYZus{}scores}\PY{p}{(}\PY{n}{X}\PY{p}{)}
-        \PY{n}{X}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP\PYZus{}per\PYZus{}capita[\PYZdl{}]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{internet\PYZus{}access\PYZus{}population[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} compute VIF}
         \PY{n}{VIF\PYZus{}scores}\PY{p}{(}\PY{n}{X}\PY{p}{)}
         
-        \PY{n}{kr} \PY{o}{=} \PY{n}{KernelRidge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}7}\PY{p}{,} \PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{coef0}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{kernel\PYZus{}params}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} drop features with VIF too high}
+        \PY{n}{X}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{internet\PYZus{}access\PYZus{}population[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{X}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP\PYZus{}per\PYZus{}capita[\PYZdl{}]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
         
+        \PY{c+c1}{\PYZsh{} compute updated VIF}
+        \PY{n}{VIF\PYZus{}scores}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}define model}
+        \PY{n}{kr} \PY{o}{=} \PY{n}{KernelRidge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}6}\PY{p}{,} \PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{coef0}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{kernel\PYZus{}params}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} compute R\PYZca{}2}
         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{R\PYZus{}sqrd:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{kr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{y}\PY{p}{)}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{y}\PY{p}{)}\PY{p}{)}
         
+        \PY{c+c1}{\PYZsh{} cross\PYZhy{}validation}
         \PY{n}{scores} \PY{o}{=} \PY{n}{cross\PYZus{}val\PYZus{}score}\PY{p}{(}\PY{n}{kr}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{5\PYZhy{}fold cross validation (R\PYZus{}sqrd):}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{scores}\PY{p}{)}
 \end{Verbatim}
@@ -462,78 +475,90 @@ economy                       : 0.812
 family                        : 0.753 
 health                        : 0.782 
 freedom                       : 0.570 
-generosity                    : 0.155 <- no correlation, factor will be dropped
+generosity                    : 0.155 <- no correlation, drop candidate
 corruption                    : 0.429 
 dystopia\_residual             : 0.475 
 internet\_access\_population[\%] : 0.791 
 cellular\_subscriptions        : 0.508 
-surplus\_deficit\_GDP[\%]        : 0.282 <- no correlation, factor will be dropped
+surplus\_deficit\_GDP[\%]        : 0.282 <- no correlation, drop candidate
 familiy\_income\_gini\_coeff     : -0.303 
 GDP\_per\_capita[\$]             : 0.719 
 inflation\_rate[\%]             : -0.329 
-military\_expenditures[\%]      : -0.128 <- no correlation, factor will be dropped
-population                    : -0.032 <- no correlation, factor will be dropped
+military\_expenditures[\%]      : -0.128 <- no correlation, drop candidate
+population                    : -0.032 <- no correlation, drop candidate
 
                 VIF:
-economy                       : 10.515 <- VIF too high
-family                        : 2.270 
-health                        : 4.514 
-freedom                       : 1.818 
-corruption                    : 2.129 
-dystopia\_residual             : 1.053 
-internet\_access\_population[\%] : 6.220 <- VIF too high
-cellular\_subscriptions        : 1.878 
-familiy\_income\_gini\_coeff     : 1.365 
-GDP\_per\_capita[\$]             : 5.523 <- VIF too high
-inflation\_rate[\%]             : 1.344 
+economy                       : 11.015 <- VIF too high
+family                        : 2.275 
+health                        : 4.629 
+freedom                       : 1.934 
+generosity                    : 1.311 
+corruption                    : 2.138 
+dystopia\_residual             : 1.077 
+internet\_access\_population[\%] : 6.254 <- VIF too high
+cellular\_subscriptions        : 1.879 
+familiy\_income\_gini\_coeff     : 1.374 
+GDP\_per\_capita[\$]             : 5.723 <- VIF too high
+inflation\_rate[\%]             : 1.351 
 
                 VIF:
-economy                       : 5.120 <- VIF too high
+economy                       : 5.318 <- VIF too high
 family                        : 2.197 
-health                        : 4.097 
-freedom                       : 1.807 
-corruption                    : 1.473 
-dystopia\_residual             : 1.036 
+health                        : 4.158 
+freedom                       : 1.931 
+generosity                    : 1.262 
+corruption                    : 1.528 
+dystopia\_residual             : 1.063 
 cellular\_subscriptions        : 1.869 
-familiy\_income\_gini\_coeff     : 1.316 
-inflation\_rate[\%]             : 1.312 
+familiy\_income\_gini\_coeff     : 1.329 
+inflation\_rate[\%]             : 1.317 
 
-R\_sqrd: 0.9879311552206953
+R\_sqrd: 0.9999999407343686
 
 5-fold cross validation (R\_sqrd):
- [0.81105808 0.72446531 0.12467273 0.59928787 0.82559909]
+ [0.99999958 0.99999715 0.99999662 0.99999816 0.99999938]
 
     \end{Verbatim}
 
-    \paragraph{Conclusion}
+    \paragraph{Summary}
 
-At first, the Correlation Coefficients for each variable were calculated
-and factors, that do not correlate were tossed because they do not
-explain the happiness score very well.\newline
+Plotting wasn't enough. Therefore, the correlation coefficients for each
+variable were calculated and factors, that do not correlate were
+considered candidates to be tossed. Just as a note: one has to be really
+brave to fit a line through some of the plots, but at this point I had
+no other strategy to build my model. E.g., I tried to find
+transformations for a better fit of the linear model, but couldn't find
+any.\newline
 
-The variance inflation factor (VIF) was calculated to check for
+Selecting factors before the cross-validation (CV) process is not a good
+idea and should be ideally done during the CV process {[}1{]}.
+Eventually, I carefully removed the drop candidates one by one and
+concluded that all could be tossed except for the 'generosity' factor.
+
+Next, the variance inflation factor (VIF) was calculated to check for
 multicolinearity (i.e., to check if independent variables are correlated
 among each other). A VIF of 1 is good, a VIF between 5 and 10 indicates
 high correlation and might be a problem. From the first VIF computations
 (see the first VIF table above) 3 variables indicate too much
 correlation.\newline
 Dropping the 'economy' factor with an VIF over 10 seems reasonable at
-first but is a bad idea, because it leads to siginficant drops in the
-cross validation eventually. This might be because the correlation for
-'economy' is the strongest among all independent variables to the
-dependent variable. Dropping the other two variables with a bad VIF
-leads to a better model (although, the 'economy' factor is still too
-high in the second VIF table above). Like the 'economy' variable, the
-'GDP per capita' and 'internet access population' variables highly
-correlate with the happiness score as well but do not impair the final
-results when being removed after the VIF check. This might be because a
-linear model fits best for the 'economy' factor, but for the other two
-other models should work better.\newline
+first but is a bad idea, because it leads to siginficant drops in the CV
+eventually. This might be because the correlation for 'economy' is the
+strongest among all independent variables to the dependent variable.
+Dropping the 'internet access population' and 'GDP per capita' variables
+with bad VIFs leads to an even better model (although, the 'economy'
+factor is still too high in the second VIF table above). Like the
+'economy' variable, the 'internet access population' and 'GDP per
+capita' variables highly correlate with the happiness score, but do not
+impair the final results when being removed after the VIF check.\newline
 
-Model parameters: the best \(\alpha = 1e-7\) and \(\gamma\) has no
+Model parameters: the best \(\alpha = 10^{-6}\), \(\gamma\) has no
 effect on the result.\newline
 
 \textbf{References:}\newline
+
+{[}1{]} T. Hastie, The Elements of Statisitcal Learning, Chapter 7.10.2
+The wrong and right way to do Cross-validation\newline
 
 Strategies for optimizing the linear model:\newline
 \url{https://www.youtube.com/watch?v=dQNpSa-bq4M&list=PLIeGtxpvyG-IqjoU8IiF0Yu1WtxNq_4z-&index=1}\newline
@@ -546,25 +571,156 @@ VIF code:\newline
     \subsection{Quadratic model}\label{quadratic-model}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{}sklearn.metrics.pairwise.polynomial\PYZus{}kernel(x\PYZus{}reshaped, np.array(data.family).reshape(\PYZhy{}1,1), degree=2, gamma=None, coef0=1)}
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{X} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}\PY{p}{;}
         
-        \PY{c+c1}{\PYZsh{}reg\PYZus{}x = np.linspace(2.5,7.5, 100).reshape(\PYZhy{}1,1)}
-        \PY{c+c1}{\PYZsh{}reg\PYZus{}y = linearModel.predict(reg\PYZus{}x)}
+        \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{import} \PY{n}{spearmanr}
         
-        \PY{c+c1}{\PYZsh{}plt.scatter(data.happiness\PYZus{}score, data.family)}
-        \PY{c+c1}{\PYZsh{}plt.plot(reg\PYZus{}x, reg\PYZus{}y, c =\PYZsq{}red\PYZsq{})}
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+        \PY{c+c1}{\PYZsh{}\PYZsh{} Spearman corrcoef code \PYZsh{}\PYZsh{}}
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+        \PY{c+c1}{\PYZsh{}print(\PYZdq{}\PYZbs{}n\PYZpc{}\PYZhy{}13sCorrcoef:\PYZdq{}\PYZpc{}(\PYZdq{}\PYZdq{}))}
+        \PY{c+c1}{\PYZsh{}for x in range(1,len(data.columns)):}
+        \PY{c+c1}{\PYZsh{}    cc = spearmanr(data.iloc[:,x], y)}
+        \PY{c+c1}{\PYZsh{}    print(\PYZdq{}\PYZpc{}\PYZhy{}30s: corr.: \PYZpc{}.3f, p\PYZhy{}value: \PYZpc{}.2e\PYZdq{}\PYZpc{} (data.columns[x],cc[0],cc[1]),end=\PYZdq{} \PYZdq{}),}
+        \PY{c+c1}{\PYZsh{}    if (np.abs(cc[0]) \PYZlt{} 0.3):}
+        \PY{c+c1}{\PYZsh{}        print(\PYZdq{}\PYZlt{}\PYZhy{} no correlation, drop candidate\PYZdq{})}
+        \PY{c+c1}{\PYZsh{}    else:}
+        \PY{c+c1}{\PYZsh{}        print(\PYZdq{}\PYZdq{})}
+        
+        \PY{c+c1}{\PYZsh{} carefully drop possibly uncorrelated features }
+        \PY{n}{X}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{familiy\PYZus{}income\PYZus{}gini\PYZus{}coeff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PYZbs{}
+                        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{military\PYZus{}expenditures[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{population}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} additional careful drops}
+        \PY{n}{X}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{internet\PYZus{}access\PYZus{}population[}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{X}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP\PYZus{}per\PYZus{}capita[\PYZdl{}]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} model definition}
+        \PY{n}{kr} \PY{o}{=} \PY{n}{KernelRidge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}8}\PY{p}{,} \PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{poly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}5}\PY{p}{,} \PY{n}{coef0}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{degree}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} compute R\PYZca{}2}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{R\PYZus{}sqrd:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{kr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{y}\PY{p}{)}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{y}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} cross\PYZhy{}validation}
+        \PY{n}{scores} \PY{o}{=} \PY{n}{cross\PYZus{}val\PYZus{}score}\PY{p}{(}\PY{n}{kr}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{5\PYZhy{}fold cross validation (R\PYZus{}sqrd):}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{scores}\PY{p}{)}
 \end{Verbatim}
 
 
-    \{text results here\}
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+R\_sqrd: 0.9999999209795366
+
+5-fold cross validation (R\_sqrd):
+ [0.99999834 0.99999628 0.99998579 0.99999333 0.99999149]
+
+    \end{Verbatim}
+
+    \paragraph{Summary}
+
+Like in the linear model, correlations between factors were also
+considered. However, this time around the Spearman correlation
+coefficient for nonlinear correlations was used. The results indicate
+almost the same conclusions as the Pearsons method in the linear model.
+Since the Spearman method is not included in numpy, scipy was used and
+since incorporating other packages is not allowed, I only present the
+results in the table below.\newline
+
+\begin{tabular}{|l|c|c|l|}
+\hline
+feature & corrcoef & p-value & result\\
+\hline
+economy                       & 0.825 & 9.36e-40 &\\
+family                        & 0.774 & 4.00e-32 &\\
+health                        & 0.788 & 5.37e-34 &\\
+freedom                       & 0.556 & 5.81e-14 &\\
+generosity                    & 0.136 & 9.05e-02 & no correlation, drop candidate\\
+corruption                    & 0.301 & 1.42e-04 &\\
+dystopia\_residual             & 0.504 & 2.41e-11 &\\
+internet\_access\_population$\left[\%\right]$ & 0.792 & 1.26e-34 &\\
+cellular\_subscriptions        & 0.553 & 8.50e-14 &\\
+surplus\_deficit\_GDP$\left[\%\right]$        & 0.408 & 1.33e-07 &\\
+familiy\_income\_gini\_coeff     & -0.285 & 3.30e-04 & no correlation, drop candidate\\
+GDP\_per\_capita$\left[\$\right]$             & 0.827 & 3.45e-40 &\\
+inflation\_rate$\left[\%\right]$             & -0.372 & 1.85e-06 &\\
+military\_expenditures$\left[\%\right]$      & -0.196 & 1.43e-02 & no correlation, drop candidate\\
+population                    & -0.108 & 1.81e-01 & no correlation, drop candidate\\
+\hline
+\end{tabular}
+
+\hspace{.4cm}
+
+From this insight removing all drop candidates except for 'generosity'
+did not affect the quality of the model. Addiditonally, removing
+'internet access population' and 'GDP per capita', like in the linear
+model did not impair the model and made scaling unnecessary.\newline
+
+Model parameters: best \(\alpha = 10^{-8}\), best \(\gamma = 10^{-5}\)
 
     \subsection{Gaussian model}\label{gaussian-model}
 
-    \{text results here\}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{X} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c+c1}{\PYZsh{} model definition}
+        \PY{n}{kr} \PY{o}{=} \PY{n}{KernelRidge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}8}\PY{p}{,} \PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rbf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}6}\PY{p}{,} \PY{n}{kernel\PYZus{}params}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} compute R\PYZca{}2}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{R\PYZus{}sqrd:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{kr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{y}\PY{p}{)}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{y}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} cross\PYZhy{}validation}
+        \PY{n}{scores} \PY{o}{=} \PY{n}{cross\PYZus{}val\PYZus{}score}\PY{p}{(}\PY{n}{kr}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{5\PYZhy{}fold cross validation (R\PYZus{}sqrd):}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{scores}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZsh{}\PYZsh{} With feature scaling:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} scale features}
+        \PY{n}{scaler} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+        \PY{n}{temp} \PY{o}{=} \PY{n}{scaler}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+        \PY{n}{X} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data}\PY{o}{=}\PY{n}{temp}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{n}{X}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} recompute R\PYZca{}2}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{R\PYZus{}sqrd:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{kr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{y}\PY{p}{)}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{y}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} redo cross\PYZhy{}validation}
+        \PY{n}{scores} \PY{o}{=} \PY{n}{cross\PYZus{}val\PYZus{}score}\PY{p}{(}\PY{n}{kr}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{5\PYZhy{}fold cross validation (R\PYZus{}sqrd):}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{scores}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+R\_sqrd: 0.999995457664676
+
+5-fold cross validation (R\_sqrd):
+ [ -344.01071139  -849.2932515  -1105.29309945  -399.93350013
+  -102.85021507]
+
+
+\#\# With feature scaling:
+
+R\_sqrd: 0.9999999430168296
+
+5-fold cross validation (R\_sqrd):
+ [0.99999911 0.99999702 0.99999503 0.99999781 0.99999923]
+
+    \end{Verbatim}
+
+    \paragraph{Summary}
+
+For the Gaussian model I did not remove any features and did not get any
+'matrix is near singular' warnings, due to the nature of the model. I
+had to scale the features eventually in order to get a usable model. I
+used up all my research power in the linear model. Therefore, I didn't
+investigate as much here and do not have too much to say.\newline
+
+Model parameters: best \(\alpha = 10^{-8}\), best \(\gamma = 10^{-6}\)
 
     \subsection{Comparison}\label{comparison}
 
-    \{replace with your comparison paragraph/images\}
+    All models worked surprisingly well eventually. So well, that it might
+be reasonable to become suspicious (keyword: overfitting). Since all
+models work well, I would say the linear model is the best since it is
+the simplest model among the three.
 
 
     % Add a bibliography block to the postdoc
